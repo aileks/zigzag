@@ -22,18 +22,17 @@ test "while with continue expression" {
 
 test "while with continue" {
     var sum: u8 = 0;
-    var i: u8 = 1;
+    var i: u8 = 0;
     while (i <= 3) : (i += 1) {
-        // there is also the standard `continue` statement
         if (i == 2) continue;
-        sum += 1;
+        sum += i;
     }
     try expect(sum == 4);
 }
 
 test "while with break" {
     var sum: u8 = 0;
-    var i: u8 = 1;
+    var i: u8 = 0;
     while (i <= 3) : (i += 1) {
         if (i == 2) break;
         sum += i;
