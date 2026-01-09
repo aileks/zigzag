@@ -12,12 +12,28 @@ test "adding five" {
     try expect(y == 5);
 }
 
-fn fibonacci(n: u16) u16 {
+fn fib(n: u32, memo: *std.AutoHashMap(u32, u64)) !u64 {
     if (n == 0 or n == 1) return n;
-    return fibonacci(n - 1) + fibonacci(n - 2);
+
+    if (memo.get(n)) |v| return v;
+
+    const v: u64 = if (n < 2)
+        n
+    else
+        (try fib(n - 1, memo)) + (try fib(n - 2, memo));
+
+    try memo.put(n, v);
+    return v;
 }
 
 test "recursive function" {
-    const x = fibonacci(10);
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
+    const alloc = gpa.allocator();
+
+    var memo = std.AutoHashMap(u32, u64).init(alloc);
+    defer memo.deinit();
+
+    const x = try fib(10, &memo);
     try expect(x == 55);
 }
