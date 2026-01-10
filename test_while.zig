@@ -3,7 +3,6 @@ const expect = std.testing.expect;
 
 test "while" {
     var i: u8 = 2;
-    // your standard while loop
     while (i < 100) {
         i *= 2;
     }
@@ -13,7 +12,7 @@ test "while" {
 test "while with continue expression" {
     var sum: u8 = 0;
     var i: u8 = 1;
-    // basically a makeshift for loop
+    // `: (i += 1)` runs after each iteration.
     while (i <= 10) : (i += 1) {
         sum += i;
     }

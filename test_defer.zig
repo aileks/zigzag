@@ -4,6 +4,7 @@ const expect = std.testing.expect;
 test "defer" {
     var x: i16 = 5;
     {
+        // `defer` runs when leaving the scope.
         defer x += 2;
         try expect(x == 5);
     }
@@ -13,7 +14,7 @@ test "defer" {
 test "multi defer" {
     var x: f32 = 5;
     {
-        // stacks; the most recent defer is called first
+        // LIFO: last defer runs first.
         defer x += 2;
         defer x /= 2;
     }

@@ -1,7 +1,6 @@
 const std = @import("std");
 const expect = std.testing.expect;
 
-// fn -> funcName -> params -> return type
 fn addFive(x: u32) u32 {
     return x + 5;
 }
@@ -12,6 +11,7 @@ test "adding five" {
     try expect(y == 5);
 }
 
+// `!u64` because memoization can allocate.
 fn fib(n: u32, memo: *std.AutoHashMap(u32, u64)) !u64 {
     if (n == 0 or n == 1) return n;
 
@@ -31,6 +31,7 @@ test "recursive function" {
     defer _ = gpa.deinit();
     const alloc = gpa.allocator();
 
+    // AutoHashMap owns heap memory; `deinit` frees it.
     var memo = std.AutoHashMap(u32, u64).init(alloc);
     defer memo.deinit();
 
