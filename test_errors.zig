@@ -1,5 +1,4 @@
-const std = @import("std");
-const expect = std.testing.expect;
+const expect = @import("std").testing.expect;
 
 const FileOpenError = error{ AccessDenied, OutOfMemory, FileNotFound };
 const AllocationError = error{OutOfMemory};

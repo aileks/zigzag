@@ -1,5 +1,4 @@
-const std = @import("std");
-const expect = std.testing.expect;
+const expect = @import("std").testing.expect;
 
 test "while" {
     var i: u8 = 2;
